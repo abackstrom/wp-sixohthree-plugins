@@ -12,6 +12,14 @@ License: GPL2
 function sixohthree_gist($atts = array(), $id = null) {
 	$atts = shortcode_atts(array('file' => ''), $atts);
 
+	ksort($atts);
+
+	$key = sprintf("gist:%d:%s", $id, serialize($atts));
+
+	if( $transient = get_transient($key) ) {
+		return $transient;
+	}
+
 	$js_f = 'http://gist.github.com/%d.js';
 	$js_file_f = 'http://gist.github.com/%d.js?file=%s';
 
@@ -26,21 +34,14 @@ function sixohthree_gist($atts = array(), $id = null) {
 		$txt_url = sprintf($txt_f, $id);
 	}
 
-	$key = sprintf("gist:%d:%s", $id, $atts['file']);
+	$remote = wp_remote_get($txt_url);
 
-	if( false && $transient = get_transient($key) ) {
-		$body = $transient;
+	if( is_wp_error($remote) ) {
+		$body = $remote->get_error_message();
+	} elseif( $remote['response']['code'] == 200 ) {
+		$body = $remote['body'];
 	} else {
-		$remote = wp_remote_get($txt_url);
-
-		if( is_wp_error($remote) ) {
-			$body = $remote->get_error_message();
-		} elseif( $remote['response']['code'] == 200 ) {
-			$body = $remote['body'];
-			set_transient($key, $body, 900); // 15 min cache
-		} else {
-			$body = "Unable to fetch this gist.";
-		}
+		$body = "Unable to fetch this gist.";
 	}
 
 	//
@@ -50,10 +51,9 @@ function sixohthree_gist($atts = array(), $id = null) {
 	$url_js = esc_attr($url_js);
 	$body = htmlentities($body);
 
-	$return = <<<EOF
-	<script src="{$js_url}"></script>
-	<noscript><pre>{$body}</pre></noscript>
-EOF;
+	$return = "<script src="{$js_url}"></script><noscript><pre>{$body}</pre></noscript>";
+
+	set_transient($key, $return, 900); // 15 min cache
 
 	return $return;
 }
