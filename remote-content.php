@@ -51,7 +51,7 @@ function sixohthree_gist($atts = array(), $id = null) {
 	$url_js = esc_attr($url_js);
 	$body = htmlentities($body);
 
-	$return = "<script src="{$js_url}"></script><noscript><pre>{$body}</pre></noscript>";
+	$return = "<script src='{$js_url}'></script><noscript><pre>{$body}</pre></noscript>";
 
 	set_transient($key, $return, 900); // 15 min cache
 
