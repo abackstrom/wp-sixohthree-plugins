@@ -42,16 +42,12 @@ class Code {
 		);
 
 		if( $atts['id'] ) {
-			$args['p'] = $atts['id'];
+			$post = get_post( $atts['id'] );
 		} else {
-			$args['name'] = $atts['name'];
+			$post = get_page_by_title( $atts['name'], OBJECT, 'sotcode' );
 		}
 
-		$query = new \WP_Query($args);
-
-		if( $query->have_posts() ) {
-			$post = $query->get_queried_object();
-
+		if( $post ) {
 			return '<pre>' . $post->post_content . '</pre>';
 		}
 
