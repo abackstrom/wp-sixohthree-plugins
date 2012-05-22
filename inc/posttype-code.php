@@ -30,6 +30,12 @@ class Code {
 		return $value;
 	}
 
+	/**
+	 * Include code in another post using a shortcode:
+	 *
+	 * [code id=12]
+	 * [code name=the-post-title]
+	 */
 	public function shortcode( $atts ) {
 		extract( shortcode_atts( array(
 			'name' => null,
