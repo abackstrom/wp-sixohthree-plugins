@@ -41,14 +41,14 @@ class Code {
 			'posts_per_page' => 1,
 		);
 
-		if( $atts['id'] ) {
+		if( isset( $atts['id'] ) && $atts['id'] ) {
 			$post = get_post( $atts['id'] );
 		} else {
 			$post = get_page_by_title( $atts['name'], OBJECT, 'sotcode' );
 		}
 
 		if( $post ) {
-			return '<pre>' . $post->post_content . '</pre>';
+			return '<pre>' . htmlentities( $post->post_content ) . '</pre>';
 		}
 
 		return '(Code sample not found.)';
