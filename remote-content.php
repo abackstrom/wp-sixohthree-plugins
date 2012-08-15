@@ -14,17 +14,17 @@ function sixohthree_gist($atts = array(), $id = null) {
 
 	ksort($atts);
 
-	$key = sprintf("gist:%d:%s", $id, serialize($atts));
+	$key = sprintf("gist:%s:%s", $id, serialize($atts));
 
 	if( $transient = get_transient($key) ) {
 		return $transient;
 	}
 
-	$js_f = 'http://gist.github.com/%d.js';
-	$js_file_f = 'http://gist.github.com/%d.js?file=%s';
+	$js_f = 'https://gist.github.com/%s.js';
+	$js_file_f = 'https://gist.github.com/%d.js?file=%s';
 
-	$txt_f = 'http://gist.github.com/raw/%d';
-	$txt_file_f = 'http://gist.github.com/raw/%d/%s';
+	$txt_f = 'https://gist.github.com/raw/%s';
+	$txt_file_f = 'https://gist.github.com/raw/%s/%s';
 
 	if( $atts['file'] ) {
 		$js_url = sprintf($js_file_f, $id, urlencode($atts['file']));
