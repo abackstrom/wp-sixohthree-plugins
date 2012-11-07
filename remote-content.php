@@ -48,7 +48,7 @@ function sixohthree_gist($atts = array(), $id = null) {
 	// echo the result
 	//
 
-	$url_js = esc_attr($url_js);
+	$js_url = esc_attr($js_url);
 	$body = htmlentities($body);
 
 	$return = "<script src='{$js_url}'></script><noscript><pre>{$body}</pre></noscript>";
