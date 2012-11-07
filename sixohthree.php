@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Sixohthree Mods
-Plugin URI: http://
+Plugin URI: https://sixohthree.com/
 Description: 
 Version: 1.0
 Author: Adam Backstrom
-Author URI: http://sixohthree.com/
+Author URI: https://sixohthree.com/
 License: GPL2
 */
 
@@ -52,4 +52,26 @@ function sixohthree_readability() {
 	echo <<<EOF
 <div class="rdbWrapper" data-show-read="1" data-show-send-to-kindle="0" data-show-print="1" data-show-email="1" data-orientation="0" data-version="1" data-bg-color="transparent"></div><script type="text/javascript">(function() {var s = document.getElementsByTagName("script")[0],rdb = document.createElement("script"); rdb.type = "text/javascript"; rdb.async = true; rdb.src = document.location.protocol + "//www.readability.com/embed.js"; s.parentNode.insertBefore(rdb, s); })();</script>
 EOF;
+}
+
+if (!is_admin())
+	ob_start('sixohthree_https');
+
+function sixohthree_https($content) {
+	$content = str_replace('//mu.sixohthree.com/sixohthree/', '//sixohthree.com/', $content, $count);
+	log_counts('MU603_603', $count);
+
+	$content = str_replace('http://sixohthree.com/', 'https://sixohthree.com/', $content, $count);
+	log_counts('SSL_603', $count);
+
+	$content = str_replace('http://mu.sixohthree.com/', 'https://mu.sixohthree.com/', $content, $count);
+	log_counts('SSL_603', $count);
+
+	return $content;
+}
+
+function log_counts($name, $count) {
+	if ($count) {
+		error_log(sprintf('[%s] %s replaced %d time(s)', $_SERVER['REQUEST_URI'], $name, $count), E_USER_NOTICE); 
+	}
 }
