@@ -65,7 +65,7 @@ function sixohthree_https($content) {
 	log_counts('SSL_603', $count);
 
 	$content = str_replace('http://mu.sixohthree.com/', 'https://mu.sixohthree.com/', $content, $count);
-	log_counts('SSL_603', $count);
+	log_counts('SSL_MU603', $count);
 
 	return $content;
 }
