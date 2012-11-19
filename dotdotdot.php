@@ -53,8 +53,7 @@ function spanify_post_count($text) {
 }
 
 function wp_tagline() {
-    echo '&mdash; ';
-    bloginfo('description');
+    return '&mdash; '. get_bloginfo('description');
 }
 
 add_action('init', 'ddd_widget_init');
