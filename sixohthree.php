@@ -13,6 +13,7 @@ include __DIR__ . '/inc/class-sixohthree-container.php';
 include __DIR__ . '/inc/widget-snapshots.php';
 include __DIR__ . '/inc/widget-recents.php';
 include __DIR__ . '/inc/posttype-code.php';
+include __DIR__ . '/inc/shortcode-git-commits.php';
 
 define( 'SOT_PLUGIN', __FILE__ );
 
@@ -24,6 +25,9 @@ $sixohthree->taxonomies->snapshots->filters();
 
 $sixohthree->posttypes->code = new \Sixohthree\Posttypes\Code;
 $sixohthree->posttypes->code->hooks();
+
+$sixohthree->shortcodes->gitcommits = new \Sixohthree\Shortcodes\GitCommits;
+$sixohthree->shortcodes->gitcommits->init();
 
 // function sixohthree_widgets_init() {
 // 	/*
