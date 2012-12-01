@@ -127,8 +127,10 @@ class GitCommits {
 
         $id = 'gitcommit_block_' . count( $this->commit_groups );
 
-        $find = array('<br />');
-        $replace = array('');
+        // linebreaks, and any unicode characters that aren't
+        // translated correctly by iconv()
+        $find = array('<br />', '′');
+        $replace = array('' , "'");
 
         $content = html_entity_decode( $content );
         $content = str_replace( $find, $replace, $content );
