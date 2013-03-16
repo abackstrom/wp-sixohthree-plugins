@@ -58,8 +58,7 @@ function sixohthree_readability() {
 EOF;
 }
 
-if (!is_admin())
-	ob_start('sixohthree_https');
+//if (!is_admin()) ob_start('sixohthree_https');
 
 function sixohthree_https($content) {
 	global $pagenow;
