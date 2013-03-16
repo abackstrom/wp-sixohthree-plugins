@@ -23,7 +23,7 @@ function meta_robots($index=true,$follow=true) {
     return $meta;
 }
 
-add_action("wp_head", "template_robots");
+//add_action("wp_head", "template_robots");
 function template_robots() {
     global $paged;
 
