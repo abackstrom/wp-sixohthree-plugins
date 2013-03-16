@@ -62,8 +62,14 @@ if (!is_admin())
 	ob_start('sixohthree_https');
 
 function sixohthree_https($content) {
-	$content = str_replace('//mu.sixohthree.com/sixohthree/', '//sixohthree.com/', $content, $count);
-	log_counts('MU603_603', $count);
+	global $pagenow;
+
+	$is_login = $pagenow == 'wp-login.php';
+
+	if( ! $is_login ) {
+		$content = str_replace('//mu.sixohthree.com/sixohthree/', '//sixohthree.com/', $content, $count);
+		log_counts('MU603_603', $count);
+	}
 
 	$content = str_replace('http://sixohthree.com/', 'https://sixohthree.com/', $content, $count);
 	log_counts('SSL_603', $count);
